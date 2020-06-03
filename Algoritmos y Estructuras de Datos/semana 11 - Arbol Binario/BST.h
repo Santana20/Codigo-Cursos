@@ -95,9 +95,9 @@ private:
     {
         if ( node != nullptr )
         {
+            proc(node->elem);
             preorder(node->left, proc);
             preorder(node->right, proc);
-            proc(node->elem);
         }
     }
 
@@ -105,9 +105,9 @@ private:
     {
         if ( node != nullptr )
         {
-            proc(node->elem);
             postorder(node->left, proc);
             postorder(node->right, proc);
+            proc(node->elem);
         }
     }
 
