@@ -7,9 +7,9 @@ int main()
 {
     BST<int>* bst = new BST<int>();
 
+    bst->insertar(34);
     bst->insertar(1);
     bst->insertar(12);
-    bst->insertar(34);
     bst->insertar(61);
     bst->insertar(85);
     bst->insertar(52);
@@ -34,7 +34,13 @@ int main()
 
     cout << (bst->buscar(52) ? "YES" : "NO") << endl;
     cout << (bst->buscar(100) ? "YES" : "NO") << endl;
-    
+    cout << bst->mayorArbol() << endl;
+
+    bst->eliminarNodo(85);
+    bst->preorder(print); cout << endl;
+
+    bst->eliminarNodo(12);
+    bst->preorder(print); cout << endl;
     delete bst;
     return 0;
 }

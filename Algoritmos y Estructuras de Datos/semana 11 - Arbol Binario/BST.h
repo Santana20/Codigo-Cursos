@@ -54,6 +54,71 @@ public:
     {
         inorder(this->root, proc);
     }
+
+    T mayorArbol()
+    {
+        return getMayor(this->root);
+    }
+
+    void eliminarNodo(T elem)
+    {
+        Nodo* eliminar = root;
+        Nodo* auxPadre = nullptr;
+        bool leftchild;
+        //buscamos el nodo
+        while( eliminar != nullptr )
+        {
+            if ( elem == eliminar->elem ) break;
+            else if ( elem < eliminar->elem )
+            {
+                auxPadre = eliminar;
+                leftchild = true;
+                eliminar = eliminar->left;
+            }
+            else
+            {
+                auxPadre = eliminar;
+                leftchild = false;
+                eliminar = eliminar->right;
+            }
+        }
+
+        if ( eliminar == nullptr ) return;
+
+        //si no tiene hijo izquierdo, solo eliminamos y subimso el derecho
+        if ( eliminar->left == nullptr )
+        {
+            if ( auxPadre == nullptr )
+            {
+                this->root = eliminar->right;
+            }
+            else if ( leftchild )
+            {
+                auxPadre->left = eliminar->right;
+            }
+            else auxPadre->right = eliminar->right;
+
+            delete eliminar;
+            return;
+        }
+
+        //Si existe hijo izquierdo buscamos el mayor de ese subarbol izquierdo
+        Nodo* aux2 = eliminar->left;
+        Nodo* aux2Padre = eliminar;
+        leftchild = true;
+        while( aux2->right != nullptr )
+        {
+            aux2Padre = aux2;
+            leftchild = false;
+            aux2 = aux2->right;
+        }
+
+        eliminar->elem = aux2->elem;
+        if ( leftchild ) aux2Padre->left = aux2->left;
+        else aux2Padre->right = aux2->left;
+
+        delete aux2;
+    }
 private:
     void clear(Nodo* node)
     {
@@ -119,6 +184,12 @@ private:
             proc(node->elem);
             inorder(node->right, proc);
         }
+    }
+    
+    T getMayor(Nodo* node)
+    {
+        if ( node->right == nullptr ) return node->elem;
+        getMayor(node->right);
     }
 };
 
